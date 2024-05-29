@@ -18,12 +18,12 @@ export const refreshToken = async (req, res) => {
         if (err) return res.sendStatus(403);
         const userId = user[0].id;
         const name = user[0].name;
-        const email = user[0].email;
+        const nim = user[0].nim;
         const accessToken = jwt.sign(
-          { userId, name, email },
+          { userId, name, nim },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: "20s",
+            expiresIn: "1d",
           }
         );
         res.json({ accessToken });

@@ -9,7 +9,7 @@ const Users = db.define(
     name: {
       type: DataTypes.STRING,
     },
-    email: {
+    nim: {
       type: DataTypes.STRING,
     },
     password: {

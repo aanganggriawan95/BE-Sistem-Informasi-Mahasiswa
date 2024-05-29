@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export const getUser = async (req, res) => {
   try {
     const users = await Users.findAll({
-      attributes: ["id", "name", "email"],
+      attributes: ["id", "name", "nim"],
     });
     res.json(users);
   } catch (error) {
@@ -14,7 +14,7 @@ export const getUser = async (req, res) => {
 };
 
 export const Register = async (req, res) => {
-  const { name, email, password, confPassword } = req.body;
+  const { name, nim, password, confPassword } = req.body;
   if (password !== confPassword) {
     return res
       .status(400)
@@ -25,7 +25,7 @@ export const Register = async (req, res) => {
   try {
     await Users.create({
       name: name,
-      email: email,
+      nim: nim,
       password: hashPassword,
     });
     res.json({ msg: "Register Berhasil" });
@@ -38,23 +38,23 @@ export const Login = async (req, res) => {
   try {
     const user = await Users.findAll({
       where: {
-        email: req.body.email,
+        nim: req.body.nim,
       },
     });
     const match = await bcrypt.compare(req.body.password, user[0].password);
     if (!match) return res.status(400).json({ msg: "Wrong Password" });
     const userId = user[0].id;
     const name = user[0].name;
-    const email = user[0].email;
+    const nim = user[0].nim;
     const accessToken = jwt.sign(
-      { userId, name, email },
+      { userId, name, nim },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "20s",
+        expiresIn: "1d",
       }
     );
     const refreshToken = jwt.sign(
-      { userId, name, email },
+      { userId, name, nim },
       process.env.REFRESH_TOKEN_SECRET,
       {
         expiresIn: "1d",
@@ -75,7 +75,7 @@ export const Login = async (req, res) => {
     });
     res.json({ accessToken });
   } catch (error) {
-    res.status(404).json({ msg: "Email tidak ditemukan" });
+    res.status(404).json({ msg: "nim tidak ditemukan" });
   }
 };
 
@@ -100,5 +100,3 @@ export const Logout = async (req, res) => {
   res.clearCookie("refreshToken");
   return res.sendStatus(200);
 };
-
-

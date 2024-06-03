@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 // import Users from "./models/UserModel.js";
 // import mahasiswa from "./models/MahasiswaModel.js";
+import Berita from "./models/Berita.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ try {
 
 try {
   await db.createSchema();
+  await Berita.sync();
 
   // await mahasiswa.sync();
 } catch (error) {

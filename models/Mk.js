@@ -10,7 +10,7 @@ const Matakuliah = db.define(
         type: DataTypes.STRING,
       },
       jam: {
-        type: DataTypes.TIME,
+        type: DataTypes.STRING,
       },
       id_kelas: {
         type: DataTypes.INTEGER,

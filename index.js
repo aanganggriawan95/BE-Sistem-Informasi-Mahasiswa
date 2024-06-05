@@ -7,8 +7,9 @@ import cors from "cors";
 // import Users from "./models/UserModel.js";
 // import mahasiswa from "./models/MahasiswaModel.js";
 // import Berita from "./models/Berita.js";
-import Matakuliah from "./models/Mk.js";
+// import Matakuliah from "./models/Mk.js";
 // import Kelas from "./models/Kelas.js";
+import Dosen from "./models/Dosen.js";
 
 dotenv.config();
 const app = express();
@@ -24,10 +25,10 @@ try {
 try {
   await db.createSchema();
   // await Berita.sync();
-
   // await mahasiswa.sync();
-  await Matakuliah.sync();
+  // await Matakuliah.sync();
   // await Kelas.sync()
+  await Dosen.sync()
 } catch (error) {
   console.log(error);
 }
